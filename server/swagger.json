@@ -1,0 +1,3824 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Documentation",
+    "description": "This is an API documentation for Explorer"
+  },
+  "servers": [
+    {
+      "description": "Local Machine server",
+      "url": "http://localhost:4000"
+    },
+    {
+      "description": "Staging Xplorer Server",
+      "url": "https://finder.empliance.in"
+    },
+    {
+      "description": "Poduction Xplorer Server",
+      "url": "https://production.finder.empliance.in"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Admin",
+      "description": "Admin Operations"
+    },
+    {
+      "name": "User",
+      "description": "User Operations"
+    },
+    {
+      "name": "Razor Pay",
+      "description": "Razor Pay Generate Order Id"
+    },
+    {
+      "name": "Company",
+      "description": "Company Operations"
+    },
+    {
+      "name": "Countries Info",
+      "description": "Countries Info Management"
+    },
+    {
+      "name": "ONE CHECK",
+      "description": "ONE CHECK Management"
+    },
+    {
+      "name": "EXCEL",
+      "description": "Excel Management"
+    },
+    {
+      "name": "MCA DATA",
+      "description": "MCA Queries Management"
+    },
+    {
+      "name": "MCA SIGNATORY",
+      "description": "MCA Signatory Queries Management"
+    },
+    {
+      "name": "GST",
+      "description": "GST Management"
+    },
+    {
+      "name": "GIPI_USER",
+      "description": "Gipi User Management"
+    },
+    {
+      "name": "EMP_CHECK",
+      "description": "Empliance Check Date Management"
+    },
+    {
+      "name": "NEW MCA DATA",
+      "description": "MCA Queries Management"
+    },
+    {
+      "name": "LITIGATION BI",
+      "description": "Litigation BI Management"
+    },
+    {
+      "name": "MCA BULK",
+      "description": "Mca Bulk Data Management"
+    },
+    {
+      "name": "AWS S3",
+      "description": "AWS S3 Service Management"
+    }
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User Login",
+        "operationId": "userLogin",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "User Name Or Email",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "Login Password",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/signup": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User Signup",
+        "operationId": "userSignup",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "Name",
+                    "type": "string"
+                  },
+                  "email": {
+                    "description": "User Email",
+                    "type": "string"
+                  },
+                  "userName": {
+                    "description": "User Name",
+                    "type": "string"
+                  },
+                  "phone": {
+                    "description": "Phone Number",
+                    "type": "string"
+                  },
+                  "countryCode": {
+                    "description": "Country Code",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "Password",
+                    "type": "string"
+                  },
+                  "passwordConfirmation": {
+                    "description": "Confrim Password",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "password",
+                  "passwordConfirmation",
+                  "name",
+                  "email",
+                  "userName"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/verify-phone": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User Phone verify",
+        "operationId": "userPhoneVerify",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "description": "OTP",
+                    "type": "string"
+                  },
+                  "userId": {
+                    "description": "User ID",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "userId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/forgot-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User Forgot Password",
+        "operationId": "userForgotPassword",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "countryCode": {
+                    "description": "Country Code",
+                    "type": "string"
+                  },
+                  "phone": {
+                    "description": "User Phoen Number",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "countryCode",
+                  "phone"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/password/set-new-password": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "User set new password",
+        "operationId": "userSetNewPassword",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "description": "OTP",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "New Password",
+                    "type": "string"
+                  },
+                  "passwordConfirmation": {
+                    "description": "Password Confirmation",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "userId"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/api/auth/sign-in-with-token": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "User"
+        ],
+        "summary": "Get User Details By Token",
+        "operationId": "getUserDetailByToken",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/create-razor-order-id": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Razor Pay"
+        ],
+        "summary": "Create Razor Pay ID",
+        "operationId": "generateRazorPayAPI",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "description": "Amount to be paid",
+                    "type": "string"
+                  },
+                  "currency": {
+                    "description": "Amount Currency",
+                    "type": "string"
+                  },
+                  "doctorId": {
+                    "description": "Doctor ID",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/verify-razor-payment-signature": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "Razor Pay"
+        ],
+        "summary": "Verify Razor Payment Signature",
+        "operationId": "verifyRazorPayment",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "razorOrderId": {
+                    "description": "Order Id",
+                    "type": "string"
+                  },
+                  "razorPayId": {
+                    "description": "Payment Id",
+                    "type": "string"
+                  },
+                  "razorSignature": {
+                    "description": "Razor Signature",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/register": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin Register",
+        "operationId": "registerAdmin",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "countryCode": {
+                    "description": "Country Code",
+                    "type": "string"
+                  },
+                  "phone": {
+                    "description": "Phone Number",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Admin Name",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "countryCode",
+                  "phone",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/login": {
+      "post": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Admin Login",
+        "operationId": "adminLogins",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "Login Phone Number",
+                    "type": "string"
+                  },
+                  "countryCode": {
+                    "description": "Country Code",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "Login Password",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "countryCode"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/company/add-in-company": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Add Company",
+        "operationId": "addCompany",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cin": {
+                    "description": "Company CIN Number",
+                    "type": "string"
+                  },
+                  "name": {
+                    "description": "Company Name",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cin",
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/company/search-in-company": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Search Company",
+        "operationId": "searchCompany",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "skip",
+            "required": true,
+            "description": "Skip Company",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "description": "Limit Company",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": true,
+            "description": "Country Name",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "companyName",
+            "required": true,
+            "description": "Company Name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/company/update-company-data": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Update Company General Info",
+        "operationId": "updateCompanyGeneralInfo",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/company/static-list": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Company Static list",
+        "operationId": "companyStaticList",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/company/individual-list-details/{companyId}/{country}": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Company Individual List",
+        "operationId": "companyIndividualList",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "companyId",
+            "required": true,
+            "description": "Company ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "country",
+            "required": true,
+            "description": "Country Set Code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/company/update-company-data-from-excel": {
+      "post": {
+        "tags": [
+          "Company"
+        ],
+        "summary": "Upload Company Data From Excel",
+        "operationId": "uploadDataFromExcel",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attachment": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "attachment"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/countries-details": {
+      "get": {
+        "tags": [
+          "Countries Info"
+        ],
+        "summary": "Countries Info",
+        "operationId": "CountriesInfo",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "countryCode",
+            "required": true,
+            "description": "Country Code",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/add-ofac-header": {
+      "post": {
+        "tags": [
+          "ONE CHECK"
+        ],
+        "summary": "Add one check header",
+        "operationId": "addOneCheckHeaders",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ABD": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "ADOI": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CAN-AN": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CAFIC": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CAFSCO": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "BVIFSC": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CAEC": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CAMFDA": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "BRCEIS": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "AUASX": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "APRA": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CADA": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "BISN-MIS": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "CANSEMZ": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "ANS-TERR": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "ASIC-ALERT": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "ACCC": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "BZFSC": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  },
+                  "AZHTL": {
+                    "description": "OFAC Header",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ofacHeaders"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/add-meta-data-list": {
+      "post": {
+        "tags": [
+          "ONE CHECK"
+        ],
+        "summary": "Add ONE CHECK Meta Data",
+        "operationId": "addOneCheckMetaData",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sno": {
+                    "description": "Serial Number",
+                    "type": "string"
+                  },
+                  "keyword": {
+                    "description": "Keyword",
+                    "type": "string"
+                  },
+                  "sourceFullName": {
+                    "description": "Full Name Of Source",
+                    "type": "string"
+                  },
+                  "authorityCountry": {
+                    "description": "Country Name",
+                    "type": "string"
+                  },
+                  "type": {
+                    "description": "Type",
+                    "type": "string"
+                  },
+                  "explanation": {
+                    "description": "Explanation",
+                    "type": "string"
+                  },
+                  "sourceLink": {
+                    "description": "Multiple Links",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "sno",
+                  "keyword",
+                  "sourceFullName",
+                  "authorityCountry",
+                  "type",
+                  "explanation",
+                  "sourceLink"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/search-one-check": {
+      "get": {
+        "tags": [
+          "ONE CHECK"
+        ],
+        "summary": "Seach One Check Database",
+        "operationId": "searchOneCheckDatabase",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "keyword",
+            "required": true,
+            "description": "Search Keyword",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": true,
+            "description": "Search Limit",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "skip",
+            "required": true,
+            "description": "Switch To Page Number",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "countryName",
+            "description": "Country Name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/add-ofac-data-excel-file": {
+      "post": {
+        "tags": [
+          "ONE CHECK"
+        ],
+        "summary": "Upload One Check Data",
+        "operationId": "uploadOneCheckData",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "searchTypeValue",
+            "required": true,
+            "description": "List Type",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Domestic",
+                "International"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "uniqueFileName",
+            "required": true,
+            "description": "Give Uploading File Unique Name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "attachment": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "attachment"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/get-countries-name": {
+      "get": {
+        "tags": [
+          "ONE CHECK"
+        ],
+        "summary": "Get ONE CHECK Countries Name",
+        "operationId": "oneCheckCountriesName",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/meta-data-filter-excel": {
+      "get": {
+        "tags": [
+          "EXCEL"
+        ],
+        "summary": "Excel Processing",
+        "operationId": "excelProcessing",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/translate-hindi-to-english-excel": {
+      "get": {
+        "tags": [
+          "EXCEL"
+        ],
+        "summary": "Excel Translation Processing",
+        "operationId": "excelTranslationProcessing",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-details-from-excel": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA DATA"
+        ],
+        "summary": "Get MCA Details From Excel File",
+        "operationId": "getMcaDetailsFromExcel",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "Enter Company CIN",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/save-mca-details-from-excel": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA DATA"
+        ],
+        "summary": "Save MCA Details From Excel File",
+        "operationId": "saveMcaDetailsFromExcel",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "filePath": {
+                    "description": "File path where excel file persist",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-details": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA DATA"
+        ],
+        "summary": "Get MCA Details From Excel File",
+        "operationId": "getMcaDetails",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "Enter Company CIN",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-company-list": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA DATA"
+        ],
+        "summary": "MCA Company List",
+        "operationId": "mcaCompanyList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sort",
+            "required": true,
+            "description": "Sorting On",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "required": true,
+            "description": "Sorting Order",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "desc",
+                "asc"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "description": "Skip Page",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "description": "Search By CIN Number or Name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-company-individual-details": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA DATA"
+        ],
+        "summary": "MCA Company Individual Details",
+        "operationId": "mcaCompanyIndividualDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "description": "Company ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/delete-mca-details": {
+      "delete": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA DATA"
+        ],
+        "summary": "Delete MCA Details",
+        "operationId": "deleteMcaDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "description": "Company ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-basic-details": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "NEW MCA DATA"
+        ],
+        "summary": "NEW MCA Company Basic Details",
+        "operationId": "newMcaCompanyBasicDetails",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "Enter Company CIN",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-signatory-details-captcha": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "MCA SIGNATORY"
+        ],
+        "summary": "Get MCA Signatory Captcha Details",
+        "operationId": "getMcaSignatoryCaptchaDetails",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-signatory-details": {
+      "post": {
+        "tags": [
+          "MCA SIGNATORY"
+        ],
+        "summary": "Get MCA Signatory Details",
+        "operationId": "getMcaSignatoryDetails",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cookie": {
+                    "description": "Enter Cookie",
+                    "type": "string"
+                  },
+                  "deleteFilePath": {
+                    "description": "Enter Delete File Path",
+                    "type": "string"
+                  },
+                  "captcha": {
+                    "description": "Enter Captcha Details",
+                    "type": "string"
+                  },
+                  "companyId": {
+                    "description": "Enter Company ID",
+                    "type": "string"
+                  },
+                  "filePath": {
+                    "description": "Enter File Path",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cookie",
+                  "deleteFilePath",
+                  "captcha",
+                  "companyId",
+                  "filePath"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-gst-captcha": {
+      "get": {
+        "tags": [
+          "GST"
+        ],
+        "summary": "Get GST Captcha Details",
+        "operationId": "getGstCaptchaDetails",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/auth-gst": {
+      "post": {
+        "tags": [
+          "GST"
+        ],
+        "summary": "GST AUTH",
+        "operationId": "gstAuth",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "description": "GST Username",
+                    "type": "string"
+                  },
+                  "password": {
+                    "description": "GST Password",
+                    "type": "string"
+                  },
+                  "captcha": {
+                    "description": "GST Captcha Details",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "username",
+                  "password",
+                  "captcha"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-all-gst-by-pan": {
+      "post": {
+        "tags": [
+          "GST"
+        ],
+        "summary": "GET ALL GST BY PAN",
+        "operationId": "getAllGstByPan",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "panNumber": {
+                    "description": "PAN Number For All GST Details",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "panNumber"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-gst-list": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "GST"
+        ],
+        "summary": "GST List",
+        "operationId": "gstList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sort",
+            "required": true,
+            "description": "Sorting On",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "required": true,
+            "description": "Sorting Order",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "desc",
+                "asc"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "description": "Skip Page",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "description": "Search By PAN Number or PAN Name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-gst-individual-details": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "GST"
+        ],
+        "summary": "GST Individual Details",
+        "operationId": "gstIndividualDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "docId",
+            "required": true,
+            "description": "Document ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-gst-details": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "GST"
+        ],
+        "summary": "GST Details",
+        "operationId": "gstDetails",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "docId",
+            "required": true,
+            "description": "Document ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "gstin",
+            "required": true,
+            "description": "GST Number",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-user-list": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "GIPI_USER"
+        ],
+        "summary": "Gipi User List",
+        "operationId": "gipiUserList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sort",
+            "required": true,
+            "description": "Sorting On",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "required": true,
+            "description": "Sorting Order",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "desc",
+                "asc"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "description": "Skip Page",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/update-user-status": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "GIPI_USER"
+        ],
+        "summary": "Gipi User List",
+        "operationId": "updateGipiUserStatus",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "userId",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "checked",
+            "required": true,
+            "description": "Status Action",
+            "schema": {
+              "type": "boolean",
+              "enum": [
+                true,
+                false
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/add-emp-check-date": {
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "EMP_CHECK"
+        ],
+        "summary": "Add Empliance Check Date",
+        "operationId": "addEmpCheckDate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "dateData": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/GSTR"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/emp-check-date-list": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "tags": [
+          "EMP_CHECK"
+        ],
+        "summary": "Empliance Check Date List",
+        "operationId": "emplianceCheckDateList",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-litigation-bi/details": {
+      "post": {
+        "tags": [
+          "LITIGATION BI"
+        ],
+        "summary": "Litigation BI Details",
+        "operationId": "litigationBiDetails",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "Enter Company CIN",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-litigation-bi/save/advance-excel-file": {
+      "post": {
+        "tags": [
+          "LITIGATION BI"
+        ],
+        "summary": "Save Advance Excel Litigation BI File",
+        "operationId": "saveAdvanceExcelLitigationBiFile",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "Enter Company CIN",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-litigation-bi/save/lite-excel-file": {
+      "post": {
+        "tags": [
+          "LITIGATION BI"
+        ],
+        "summary": "Save Lite Excel Litigation BI File",
+        "operationId": "saveLiteExcelLitigationBiFile",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "companyId": {
+                    "description": "Enter Company CIN",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get/litigation-bi/list": {
+      "get": {
+        "tags": [
+          "LITIGATION BI"
+        ],
+        "summary": "Litigation BI List All",
+        "operationId": "LitigationBiListAll",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sort",
+            "required": true,
+            "description": "Sorting On",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "order",
+            "required": true,
+            "description": "Sorting Order",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "desc",
+                "asc"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": true,
+            "description": "Skip Page",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "searchText",
+            "required": false,
+            "description": "Search By CIN",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get/litigation-directors/list": {
+      "get": {
+        "tags": [
+          "LITIGATION BI"
+        ],
+        "summary": "Litigation BI Directors List",
+        "operationId": "litigationBiDirectorsList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "companyId",
+            "required": true,
+            "description": "Company ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-mca-company-bulk/details": {
+      "get": {
+        "tags": [
+          "MCA BULK"
+        ],
+        "summary": "MCA Bulk Data Details",
+        "operationId": "McaBulkDataDetails",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/get-bucket-object-list": {
+      "get": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Get Bucket Object List",
+        "operationId": "getBucketObjectList",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "prefix",
+            "required": false,
+            "description": "To filter object",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "description": "Limit of list (Default is 50)",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/update-bucket-object": {
+      "post": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Upload File To Bucket",
+        "operationId": "uploadFileToBucket",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "directoryPath": {
+                    "description": "Mention the Directory Path in which you want to upload the mentioned files. Otherwise it will saved to root directory.",
+                    "type": "string"
+                  },
+                  "attachment": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "attachment"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/generate-file-pre-signed-url": {
+      "get": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Generate Pre-Signed File URL",
+        "operationId": "generatePreSignedFileURL",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fileName",
+            "required": true,
+            "description": "File name for which need temporary access",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "expiresIn",
+            "required": false,
+            "description": "Temporary Link expiration time in seconds. Default (3600) seconds",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/delete-file": {
+      "delete": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Delete File",
+        "operationId": "deleteS3file",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "fileName",
+            "required": true,
+            "description": "File Name",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/initiate-multipart-upload": {
+      "post": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Initiate Multipart Upload",
+        "operationId": "initiateMultipartUpload",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "description": "File Name",
+                    "type": "string"
+                  },
+                  "fileType": {
+                    "description": "File Type",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "fileType"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/generate-presigned-urls": {
+      "post": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Generate Upload File Pre-Signed Urls",
+        "operationId": "generateUploadFilePreSignedUrls",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "description": "File Name",
+                    "type": "string"
+                  },
+                  "uploadId": {
+                    "description": "File Type",
+                    "type": "string"
+                  },
+                  "partNumbers": {
+                    "description": "File Type",
+                    "type": "int"
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "uploadId",
+                  "partNumbers"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    },
+    "/user/complete-multipart-upload": {
+      "post": {
+        "tags": [
+          "AWS S3"
+        ],
+        "summary": "Complete Multipart Upload File",
+        "operationId": "completeMultipartUploadFile",
+        "requestBody": {
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "fileName": {
+                    "description": "File Name",
+                    "type": "string"
+                  },
+                  "uploadId": {
+                    "description": "File Type",
+                    "type": "string"
+                  },
+                  "parts": {
+                    "description": "Parts",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fileName",
+                  "uploadId",
+                  "parts"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "X-Rate-Limit": {
+                "description": "calls per hour allowed by the user",
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "X-Expires-After": {
+                "description": "date in UTC when token expires",
+                "schema": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid username/password supplied"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "doctorObject": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "dob": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "addressLine1": {
+            "type": "string"
+          },
+          "addressLine2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          },
+          "biography": {
+            "type": "string"
+          },
+          "pricingType": {
+            "type": "string"
+          },
+          "priceCharges": {
+            "type": "string"
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "specialization": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "membership": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "education": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/doctorEducation"
+            }
+          },
+          "experience": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/doctorExperience"
+            }
+          },
+          "awards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/doctorAwards"
+            }
+          },
+          "registrations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/doctorRegistrations"
+            }
+          }
+        }
+      },
+      "doctorEducation": {
+        "type": "object",
+        "properties": {
+          "degree": {
+            "type": "string"
+          },
+          "collegName": {
+            "type": "string"
+          },
+          "completionYear": {
+            "type": "string"
+          }
+        }
+      },
+      "doctorExperience": {
+        "type": "object",
+        "properties": {
+          "hospitalName": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "to": {
+            "type": "string"
+          },
+          "designation": {
+            "type": "string"
+          }
+        }
+      },
+      "doctorAwards": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string"
+          }
+        }
+      },
+      "doctorRegistrations": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "year": {
+            "type": "string"
+          }
+        }
+      },
+      "ofacHeaders": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "GSTR": {
+        "type": "object",
+        "properties": {
+          "columnName": {
+            "type": "string"
+          },
+          "cells": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "month": {
+                  "type": "string"
+                },
+                "date": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
