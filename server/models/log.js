@@ -8,4 +8,5 @@ const logSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('log', logSchema);
+// Prevent OverwriteModelError
+module.exports = mongoose.models.log || mongoose.model('log', logSchema);

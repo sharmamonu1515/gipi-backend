@@ -3,4 +3,4 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model and pass it using module.exports
 
-module.exports = mongoose.model('litigation_bi_file_detail', new Schema({}, { strict: false} ));
+module.exports = mongoose.model('litigation_bi_file_detail_old', new Schema({}, { strict: false} ));

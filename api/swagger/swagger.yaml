@@ -43,6 +43,8 @@ tags:
     description: Mca Bulk Data Management
   - name: AWS S3
     description: AWS S3 Service Management
+  - name: AML
+    description: AML Sanctions Management
 
 #
                 #--------------------               ------------------#
@@ -2540,6 +2542,60 @@ paths:
                 - fileName
                 - uploadId
                 - parts
+      responses:
+        "200":
+          description: successful operation
+          headers:
+            X-Rate-Limit:
+              description: calls per hour allowed by the user
+              schema:
+                type: integer
+                format: int32
+            X-Expires-After:
+              description: date in UTC when token expires
+              schema:
+                type: string
+                format: date-time
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Invalid username/password supplied
+
+#
+                #--------------------               ------------------#
+                #--------------------    MCA BULK   ------------------#
+                #--------------------   Management  ------------------#
+                #--------------------               ------------------#
+
+  /aml-sanctions/list:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - AML
+      summary: AML Sanctions list
+      operationId: amlSanctionsList
+      parameters:
+        - in: query
+          name: page
+          required: true
+          description: File name for which need temporary access
+          schema:
+            type: string 
+        - in: query
+          name: limit
+          required: false
+          description: Temporary Link expiration time in seconds. Default (3600) seconds
+          schema:
+            type: string 
+        - in: query
+          name: search
+          required: false
+          description: Temporary Link expiration time in seconds. Default (3600) seconds
+          schema:
+            type: string       
       responses:
         "200":
           description: successful operation

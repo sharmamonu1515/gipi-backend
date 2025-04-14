@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 // set up a mongoose model and pass it using module.exports
 
-module.exports = mongoose.model('mca_company_bulk_detail', new Schema({
+module.exports = mongoose.model('mca_company_bulk_detail_old', new Schema({
     CIN: String,
     name: String,
     status: String,

@@ -10,7 +10,7 @@ const config = require('../config');
 
 const ofac = module.exports;
 
-ofac.addOfacHeaders = async function addOfacHeaders(req, res) { // OFAC Dynamic Headers
+ofac.addOfacHeaders = async function addOfacHeaders(req, res) { 
     try {
 
         let updateOfacHeader = {};
